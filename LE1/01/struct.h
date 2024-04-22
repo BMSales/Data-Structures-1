@@ -9,10 +9,4 @@ typedef struct {
 
 void Run(AGENDA* users, int* users_num_ptr);
 
-/*void Include(AGENDA** users, int* users_num_ptr);
-void Exclude(AGENDA** users, int* users_num_ptr);
-void Display(AGENDA* users, int* users_num_ptr); 
-int Search(AGENDA* users, int* users_num_ptr);
-void Change(AGENDA* users, int* users_num_ptr);*/
-
 #endif
