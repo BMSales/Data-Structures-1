@@ -9,11 +9,7 @@ void main(void){
 
 	users = (AGENDA*)malloc(sizeof(AGENDA));
 
-	Include(&users, users_num_ptr);
-	Display(users, users_num_ptr);
-	Include(&users, users_num_ptr);
-	Display(users, users_num_ptr);
+	Run(users, users_num_ptr);
 
-	Exclude(&users, users_num_ptr);
-	Display(users, users_num_ptr);
+	free(users);
 }
