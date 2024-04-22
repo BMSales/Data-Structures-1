@@ -12,6 +12,41 @@ void Allocate(AGENDA** users, int* users_num_ptr){
 	(*users) = (AGENDA*)realloc(*users, (*users_num_ptr) * sizeof(AGENDA));
 }
 
+void Swap(AGENDA* user_1, AGENDA* user_2){
+	AGENDA swapper;
+	swapper = *user_1;
+	*user_1 = *user_2;
+	*user_2 = swapper;
+}
+
+void Quicksort(AGENDA *users, int start, int end){
+	if(end - start < 1){
+		return;
+	}
+
+	int pivot = end;
+	int swap_marker = start - 1;
+
+	for(int i = start; i <= end; i++){
+		if(users[i].name[0] > users[pivot].name[0]){
+			continue;
+		}
+		else{
+			swap_marker++;
+			if(i > swap_marker){
+				Swap(&users[i], &users[swap_marker]);
+			}
+		}
+	}
+
+	Quicksort(users, start, swap_marker - 1);
+	Quicksort(users, swap_marker + 1, end);
+}
+
+void Sort(AGENDA* users, int* users_num_ptr){
+	Quicksort(users, 0, (*users_num_ptr) - 1);
+}
+
 int Search(AGENDA* users, int* users_num_ptr){
 	char name[40];
 
@@ -25,7 +60,7 @@ int Search(AGENDA* users, int* users_num_ptr){
 			printf("Name: ");
 			puts(users[i].name);
 
-			printf("e-Mail: ");
+			printf("email: ");
 			puts(users[i].email);
 
 			printf("Phone number: %d\n\n", users[i].phone_num);
@@ -44,13 +79,14 @@ void Include(AGENDA** users, int* users_num_ptr){
 	printf("Name of the user: ");
 	fgets((*users)[(*users_num_ptr) - 1].name, 40, stdin);
 
-	printf("e-Mail of the user: ");
+	printf("email of the user: ");
 	fgets((*users)[(*users_num_ptr) - 1].email, 40, stdin);
 
 	printf("Phone number the user: ");
 	fgets(p_number, 11, stdin);
 	(*users)[(*users_num_ptr) - 1].phone_num = strtol(p_number, NULL, 0);
 
+	Sort((*users), users_num_ptr);
 	printf("\nUser added\n\n");
 }
 
@@ -66,6 +102,8 @@ void Exclude(AGENDA** users, int* users_num_ptr){
 			(*users)[index] = (*users)[(*users_num_ptr) - 1];
 			(*users_num_ptr) = (*users_num_ptr) - 1;
 			Allocate(users, users_num_ptr);
+
+			Sort((*users), users_num_ptr);
 			printf("\nUser removed\n\n");
 		}
 	}
@@ -91,6 +129,8 @@ void Edit(AGENDA* users, int* users_num_ptr){
 			printf("New phone number: ");
 			fgets(p_number, 11, stdin);
 			users[index].phone_num = strtol(p_number, NULL, 0);
+
+			Sort(users, users_num_ptr);
 			printf("\nUser edited\n\n");
 		}
 	}
@@ -103,7 +143,7 @@ void Display(AGENDA* users, int* users_num_ptr){
 		printf("Name: ");
 		puts(users[i].name);
 
-		printf("e-Mail: ");
+		printf("email: ");
 		puts(users[i].email);
 
 		printf("Phone number: %d\n", users[i].phone_num);

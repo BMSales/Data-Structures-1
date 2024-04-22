@@ -10,6 +10,4 @@ void main(void){
 	users = (AGENDA*)malloc(sizeof(AGENDA));
 
 	Run(users, users_num_ptr);
-
-	free(users);
 }
