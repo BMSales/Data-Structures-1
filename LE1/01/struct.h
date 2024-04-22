@@ -8,6 +8,7 @@ typedef struct {
 }AGENDA;
 
 void Include(AGENDA** users, int* users_num_ptr);
+void Exclude(AGENDA** users, int* users_num_ptr);
 void Display(AGENDA* users, int* users_num_ptr); 
 
 #endif

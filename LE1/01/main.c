@@ -13,4 +13,7 @@ void main(void){
 	Display(users, users_num_ptr);
 	Include(&users, users_num_ptr);
 	Display(users, users_num_ptr);
+
+	Exclude(&users, users_num_ptr);
+	Display(users, users_num_ptr);
 }
