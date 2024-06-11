@@ -4,28 +4,23 @@
 void Insert(_queue_info* info, void* new_data){
 	_queue* new_node;
 	new_node = (_queue*)malloc(sizeof(_queue));
+	new_node->next = NULL;
+	new_node->data = new_data;
 
 	if(info->size == 0){
-		info->size += 1;
-		new_node->next = NULL;
-		new_node->data = new_data;
 		info->front = new_node;
 		info->rear = new_node;
 	}
 	else if(info->size == 1){
-		info->size += 1;
-		new_node->next = NULL;
-		new_node->data = new_data;
 		(info->front)->next = new_node;
 		info->rear = new_node;
 	}
 	else{
-		info->size += 1;
-		new_node->next = NULL;
-		new_node->data = new_data;
 		(info->rear)->next = new_node;
 		info->rear = new_node;
 	}
+
+	info->size += 1;
 }
 
 void* Remove(_queue_info* info){
