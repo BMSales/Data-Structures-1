@@ -12,9 +12,9 @@ typedef struct _queue_info{
 	struct _queue* rear;
 }_queue_info;
 
-void Push(_queue_info* info, void* new_data);
-void* Pop(_queue_info* info);
-void* Top_Value(_queue_info* info);
-int Stack_Size(_queue_info* info);
+void Insert(_queue_info* info, void* new_data);
+void* Remove(_queue_info* info);
+void* Front_Value(_queue_info* info);
+int Queue_Size(_queue_info* info);
 
 #endif
