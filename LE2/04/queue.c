@@ -48,8 +48,8 @@ int Queue_Size(_queue_info* info){
 	return info->size;
 }
 
-void Prefix_Reinsert(_queue_info* info, _queue* nodes){
-	for(int i = 0; i < 3; i++){
+void Prefix_Reinsert(_queue_info* info, _queue* nodes, int num_of_nodes){
+	for(int i = 0; i < num_of_nodes; i++){
 		Insert(info, nodes[i].data, nodes[i].data_type);
 	}
 }
@@ -58,46 +58,49 @@ void Prefix_Operation(_queue_info* info, _queue* nodes){
 	char operator = *(char*)nodes[0].data;
 	int operand_1 = *(int*)nodes[1].data;
 	int operand_2 = *(int*)nodes[2].data;
-	int result;
+	void* result = (int*)malloc(sizeof(int));
 
 	printf("operator: %c\n", operator);
 	printf("operand_1: %d\n", operand_1);
 	printf("operand_2: %d\n", operand_2);
 
-
 	switch(operator){
 		case '+':
-			result = operand_1 + operand_2;
-			Insert(info, &result, 1);
+			*(int*)result = operand_1 + operand_2;
+			Insert(info, result, 1);
+			break;
 		case '-':
-			result = operand_1 - operand_2;
-			Insert(info, &result, 1);
+			*(int*)result = operand_1 - operand_2;
+			Insert(info, result, 1);
+			break;
 		case '*':
-			result = operand_1 * operand_2;
-			Insert(info, &result, 1);
-		case '/':
-			result = operand_1 / operand_2;
-			Insert(info, &result, 1);
+			*(int*)result = operand_1 * operand_2;
+			Insert(info, result, 1);
+			break;
 	}
 }
 
 void Prefix_Check(_queue_info* info){
 	_queue nodes[3];
+	void* data_pointer;
 
-	for(int i = 0; i < 3; i++){
+	nodes[0] = Remove(info);
+
+	if(nodes[0].data_type == 1){
+		Prefix_Reinsert(info, nodes, 1);
+		return;
+	}
+
+	for(int i = 1; i < 3; i++){
+		if(info->front->data_type == 2){
+			Prefix_Reinsert(info, nodes, i);
+			return;
+		}
 		nodes[i] = Remove(info);
 	}
-	if(nodes[0].data_type == 1){
-		Prefix_Reinsert(info, nodes);
-		return;
-	}
-	else if(nodes[1].data_type == 2 || nodes[2].data_type == 2){
-		Prefix_Reinsert(info, nodes);
-		return;
-	}
-	else{
-		Prefix_Operation(info, nodes);
-	}
+
+	
+	Prefix_Operation(info, nodes);
 }
 
 int Prefix_Run(_queue_info* info){

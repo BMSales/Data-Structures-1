@@ -5,6 +5,7 @@
 
 int main(){
 	_queue_info queue;
+	_queue test;
 	queue.size = 0;
 	queue.front = NULL;
 	queue.rear = NULL;
@@ -21,9 +22,9 @@ int main(){
 		else{
 			data_pointer = (char*)malloc(sizeof(char));
 			*(char*)data_pointer = string[i];
-			printf("%c\n", *(char*)data_pointer);
 			Insert(&queue, data_pointer, 2);
 		}
 	}
-	printf("%d\n", Prefix_Run(&queue));
+
+	printf("result: %d\n", Prefix_Run(&queue));
 }
